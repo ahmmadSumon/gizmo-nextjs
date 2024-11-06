@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { newArrivals } from "../../data"; // Adjust the path as needed
 import Image from "next/image";
 import useCartStore from "../../useCartStore"; // Import the cart store
+import { toast } from "react-toastify";
 
 const ProductDetails = () => {
   const { id } = useParams();  // Get the id from URL params using useParams
@@ -35,16 +36,19 @@ const ProductDetails = () => {
     return <p>{error}</p>;
   }
 
-  const handleAddToCart = () => {
-    const productToAdd = {
-      id: product.id.toString(),
-      title: product.name,
-      price: product.price,
-      image: product.image,
-      quantity: 1,
-      size: null, // You can adjust this based on your product options
-    };
-    addItem(productToAdd); // Add the product to the cart
+  const handleAddToCart = (e) => {
+  
+    addItem(product); // Add the product to the cart
+
+    // Trigger toast notification
+    toast(`${product.name} added to cart.`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
 
   return (
@@ -64,15 +68,18 @@ const ProductDetails = () => {
             <h1 className="text-3xl font-bold text-gray-800 mb-4">{product.name}</h1>
             <p className="text-lg text-gray-600 mb-6">{product.description}</p>
             <p className="text-2xl font-semibold text-gray-800 mb-6">${product.price}</p>
+            <div className="flex gap-5">
             <button
               onClick={handleAddToCart} // Add to cart button
-              className="bg-blue-500 text-white py-2 px-4 rounded-lg"
+              className="bg-black text-white py-2 px-4 rounded-lg"
             >
               Add to Cart
             </button>
-            <button className="mt-4 bg-green-500 text-white py-2 px-4 rounded-lg">
+            <button className=" bg-green-500 text-white py-2 px-4 rounded-lg">
               Buy Now
             </button>
+            </div>
+            
           </div>
         </div>
       </div>
