@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 // Sample image URLs for the carousel and product images
@@ -58,7 +59,7 @@ const HeroSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Carousel takes up 70% width */}
           <div className="col-span-1 lg:col-span-2 w-full h-[400px] overflow-hidden rounded-lg shadow-lg relative">
-            <img
+            <Image
               src={carouselImages[currentImageIndex]}
               alt="carousel"
               className="w-full h-full object-cover transition-transform duration-1000"
@@ -68,14 +69,14 @@ const HeroSection = () => {
           {/* Right Column (Two Image Grid) */}
           <div className="col-span-1 lg:col-span-1 flex flex-col gap-4">
             <div className="w-full h-[190px] overflow-hidden rounded-lg shadow-lg">
-              <img
+              <Image
                 src="/ban4.webp"
                 alt="image 4"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="w-full h-[190px] overflow-hidden rounded-lg shadow-lg">
-              <img
+              <Image
                 src="/ban2.webp"
                 alt="image 5"
                 className="w-full h-full object-cover"

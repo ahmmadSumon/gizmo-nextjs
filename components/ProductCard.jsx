@@ -1,6 +1,7 @@
 import Link from "next/link";
 import useCartStore from "../app/useCartStore"; // Adjust the import path
 import { toast } from "react-toastify";
+import Image from "next/image";
 
 const ProductCard = ({ product }) => {
   const addItem = useCartStore((state) => state.addItem);
@@ -25,7 +26,7 @@ const ProductCard = ({ product }) => {
       {/* Wrap only the parts you want to navigate */}
       <Link href={`/products/${product.id}`} passHref>
         <div className="cursor-pointer">
-          <img
+          <Image
             src={product.image}
             alt={product.name}
             className="w-full h-48 object-cover rounded-lg"
