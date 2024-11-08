@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 
 const CheckoutForm = ({ onSubmit }) => {
@@ -14,6 +14,8 @@ const CheckoutForm = ({ onSubmit }) => {
     cvv: "",
   });
 
+  const [isSubmitted, setIsSubmitted] = useState(false); // State for success message
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -24,8 +26,8 @@ const CheckoutForm = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform validation if necessary
     onSubmit(formData);
+    setIsSubmitted(true); // Set success message after submission
   };
 
   return (
@@ -179,6 +181,13 @@ const CheckoutForm = ({ onSubmit }) => {
         >
           Submit Order
         </button>
+
+        {/* Success Message */}
+        {isSubmitted && (
+          <p className="mt-4 text-center text-green-500 font-semibold">
+            Submitted successfully!
+          </p>
+        )}
       </form>
     </div>
   );

@@ -1,8 +1,8 @@
 "use client";
 
-import Herosection from "@/components/Herosection";
+import Herosection from "../components/Herosection";
 import Products from "./products/page";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
