@@ -1,83 +1,40 @@
 import { create } from 'zustand';
-import { toast } from 'react-toastify';
 
-const useCartStore = create((set) => ({
-  cart: [], // Array to hold products in the cart
+const useCartStore = create((set, get) => ({
+  cart: [],
 
-  // Add item to the cart
+  getTotalPrice: () => {
+    // Use `get()` to access the current state instead of `useCartStore.getState()`
+    return get().cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  },
+
   addItem: (product) => set((state) => {
     const existingItemIndex = state.cart.findIndex(item => item.id === product.id);
-
     if (existingItemIndex >= 0) {
-      // Update quantity if the item is already in the cart
+      // Update quantity if item exists
       const updatedCart = [...state.cart];
       updatedCart[existingItemIndex].quantity += product.quantity;
-      // Add the toast notification
-      toast(`${product.title} quantity updated.`, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
       return { cart: updatedCart };
     } else {
-      // Add new item to the cart
-      return { cart: [...state.cart, product] };
+      // Add new item if not found
+      // Ensure that product has price and quantity with valid default values
+      return { cart: [...state.cart, { ...product, quantity: product.quantity || 1, price: product.price || 0 }] };
     }
   }),
 
-  // Remove item from the cart
-  removeItem: (id) => set((state) => {
-    toast(`Item removed from cart.`, {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    return { cart: state.cart.filter(item => item.id !== id) };
-  }),
+  removeItem: (id) => set((state) => ({
+    cart: state.cart.filter(item => item.id !== id)
+  })),
 
-  // Clear the cart
-  clearCart: () => set(() => {
-    toast(`Cart cleared.`, {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    return { cart: [] };
-  }),
-
-  // Update item quantity in the cart
+  clearCart: () => set(() => ({ cart: [] })),
   updateQuantity: (id, quantity) => set((state) => {
-    const updatedCart = state.cart.map(item => 
-      item.id === id ? { ...item, quantity } : item
+    const updatedCart = state.cart.map(item =>
+      item.id === id
+        ? { ...item, quantity: quantity > 0 ? quantity : 1 } // Ensure quantity can't go below 1
+        : item
     );
-    toast(`Quantity updated.`, {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
     return { cart: updatedCart };
   }),
-
-  // Get total price of items in the cart
-  getTotalPrice: () => (state) => {
-    return state.cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  }
 }));
 
 export default useCartStore;

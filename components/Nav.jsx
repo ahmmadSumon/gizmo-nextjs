@@ -3,15 +3,15 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../public/logo.png";
-import { NavigationMenuDemo } from "./NavigationMenuDemo";
+import  NavigationMenuDemo  from "./NavigationMenuDemo";
 import { FiShoppingCart } from "react-icons/fi"; // Cart icon
 import { FaSearch } from "react-icons/fa"; // Search icon
 import { FiUser } from "react-icons/fi"; // User icon
 import { FiMenu } from "react-icons/fi"; // Hamburger icon
 import useCartStore from "../app/useCartStore"; // Import Zustand store
-import ToastMessage from "../components/ToastMessage"; // Import Toast component
 
-export default function Nav() {
+
+const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -198,3 +198,5 @@ export default function Nav() {
     </nav>
   );
 }
+
+export default Nav

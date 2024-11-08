@@ -13,7 +13,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "./ui/ShadcnMenu"
+} from "../components/ui/ShadcnMenu"
 
 // List of product categories and important pages for the gadget shop
 const categories = [
@@ -49,7 +49,7 @@ const categories = [
   },
 ]
 
-export function NavigationMenuDemo() {
+export default function NavigationMenuDemo() {
   return (
     <NavigationMenu>
       <NavigationMenuList>

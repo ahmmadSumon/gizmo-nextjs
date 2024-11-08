@@ -1,15 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import Herosection from "@/components/Herosection";
 import Products from "./products/page";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
-  // Toast state
-  const [isToastVisible, setIsToastVisible] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
 
   // Show toast message
   const handleAddToCart = (productName) => {
@@ -29,7 +25,7 @@ export default function Home() {
       {/* Pass handleAddToCart to Products */}
       <Products onAddToCart={handleAddToCart} />
 
-      {/* Toast Message */}
+    
   
     </>
   );

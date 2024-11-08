@@ -11,7 +11,7 @@ const carouselImages = [
   "/ban2.webp",
 ];
 
-const products = [
+const productsItems = [
   { name: "Earbuds", image: "/earbuds.webp", link: "/product/1" },
   { name: "Cases", image: "/Cases_100_100.webp", link: "/product/2" },
   { name: "Smartwatch", image: "/Smartwatch_100_100.webp", link: "/product/3" },
@@ -62,6 +62,8 @@ const HeroSection = () => {
             <Image
               src={carouselImages[currentImageIndex]}
               alt="carousel"
+              width={840}
+              height={400}
               className="w-full h-full object-cover transition-transform duration-1000"
             />
           </div>
@@ -72,6 +74,9 @@ const HeroSection = () => {
               <Image
                 src="/ban4.webp"
                 alt="image 4"
+                width={266}
+                height={190}
+              
                 className="w-full h-full object-cover"
               />
             </div>
@@ -79,6 +84,8 @@ const HeroSection = () => {
               <Image
                 src="/ban2.webp"
                 alt="image 5"
+                width={266}
+                height={190}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -100,13 +107,15 @@ const HeroSection = () => {
 
             {/* Product items */}
             <div className="flex transition-transform duration-300" style={{ transform: `translateX(-${currentIndex * 220}px)` }}>
-              {products.map((product) => (
+              {productsItems.map((product) => (
                 <div key={product.name} className="text-center w-[100px] md:w-[200px] flex-shrink-0">
                   <a href={product.link}>
                     <div className="flex justify-center items-center">
-                      <img
+                      <Image
                         src={product.image}
                         alt={product.name}
+                        width={50}
+                        height={50}
                         className="w-[50px] h-[50px] object-cover rounded-lg mb-2"
                       />
                     </div>

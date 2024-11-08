@@ -1,11 +1,13 @@
 "use client";
 import { useState } from "react";
-import ProductCard from "../../components/ProductCard";
-import { newArrivals } from "../data"; // Example product data
-import useCartStore from "../useCartStore"; // Import the useCartStore hook
+import ProductCard from "../../components/ProductCard"; // Ensure the path is correct
+import newArrivals from "../data";
+import useCartStore from "../useCartStore";
+import { toast } from "react-toastify"; // Assuming you use react-toastify for notifications
 
 const Products = () => {
-  const addItem = useCartStore((state) => state.addItem); // Access addItem from cart store
+  const addItem = useCartStore((state) => state.addItem);
+
   const handleAddToCart = (product) => {
     const productToAdd = {
       id: product.id.toString(),
@@ -13,15 +15,19 @@ const Products = () => {
       price: product.price,
       image: product.image,
       quantity: 1,
-      size: null, // You can add size options if necessary
+      size: null,
     };
-    addItem(productToAdd); // Add the product to the cart
-    
-    setIsToastVisible(true);
+    addItem(productToAdd);
 
-    setTimeout(() => {
-      setIsToastVisible(false);
-    }, 3000);
+    // Trigger toast notification
+    toast(`${product.name} added to cart!`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
 
   return (
@@ -30,18 +36,12 @@ const Products = () => {
         <h2 className="text-2xl font-bold text-gray-800 mb-6">New Arrivals</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {newArrivals.map((product) => (
-            <div key={product.id} className="relative fle rigth-0">
-             <ProductCard product={product} />
-             
+            <div key={product.id} className="relative">
+              <ProductCard product={product} onAddToCart={() => handleAddToCart(product)} />
             </div>
-            
           ))}
-                
         </div>
       </div>
-
-     
-      
     </section>
   );
 };

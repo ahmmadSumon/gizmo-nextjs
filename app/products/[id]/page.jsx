@@ -1,21 +1,23 @@
 "use client";
 
-import { useParams } from "next/navigation"; // Import from next/navigation
+import { useParams } from "next/navigation"; // Correct way to get dynamic params in Next.js 15
 import { useEffect, useState } from "react";
-import { newArrivals } from "../../data"; // Adjust the path as needed
+import newArrivals from "../../data"; // Adjust path if needed
 import Image from "next/image";
-import useCartStore from "../../useCartStore"; // Import the cart store
+import useCartStore from "../../useCartStore";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const ProductDetails = () => {
-  const { id } = useParams();  // Get the id from URL params using useParams
+  const { id } = useParams(); // Get dynamic route parameter using `useParams`
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const addItem = useCartStore((state) => state.addItem); // Access addItem from cart store
+  const addItem = useCartStore((state) => state.addItem);
+  const router = useRouter();
 
   useEffect(() => {
-    if (!id) return;  // Ensure id is available before fetching product
+    if (!id) return;
 
     const foundProduct = newArrivals.find((product) => product.id.toString() === id);
 
@@ -26,7 +28,7 @@ const ProductDetails = () => {
       setError("Product not found!");
       setLoading(false);
     }
-  }, [id]); // Re-run when `id` changes
+  }, [id]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -36,11 +38,9 @@ const ProductDetails = () => {
     return <p>{error}</p>;
   }
 
-  const handleAddToCart = (e) => {
-  
-    addItem(product); // Add the product to the cart
+  const handleAddToCart = (shouldNavigate = false) => {
+    addItem(product);
 
-    // Trigger toast notification
     toast(`${product.name} added to cart.`, {
       position: "top-right",
       autoClose: 3000,
@@ -49,6 +49,10 @@ const ProductDetails = () => {
       pauseOnHover: true,
       draggable: true,
     });
+
+    if (shouldNavigate) {
+      router.push("/cart");
+    }
   };
 
   return (
@@ -69,17 +73,19 @@ const ProductDetails = () => {
             <p className="text-lg text-gray-600 mb-6">{product.description}</p>
             <p className="text-2xl font-semibold text-gray-800 mb-6">${product.price}</p>
             <div className="flex gap-5">
-            <button
-              onClick={handleAddToCart} // Add to cart button
-              className="bg-black text-white py-2 px-4 rounded-lg"
-            >
-              Add to Cart
-            </button>
-            <button className=" bg-green-500 text-white py-2 px-4 rounded-lg">
-              Buy Now
-            </button>
+              <button
+                onClick={() => handleAddToCart()}
+                className="bg-black text-white py-2 px-4 rounded-lg"
+              >
+                Add to Cart
+              </button>
+              <button
+                onClick={() => handleAddToCart(true)}
+                className="bg-green-500 text-white py-2 px-4 rounded-lg"
+              >
+                Buy Now
+              </button>
             </div>
-            
           </div>
         </div>
       </div>
