@@ -1,5 +1,5 @@
 "use client"
-import CheckoutForm from '../../components/checkoutForm';
+import CheckoutForm from '../../components/CheckoutForm';
 
 const CheckoutPage = () => {
   const handleFormSubmit = async (data) => {
